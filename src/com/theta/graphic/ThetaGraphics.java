@@ -11,6 +11,7 @@ import com.theta.util.ThetaUtils;
 
 public abstract class ThetaGraphics {
 
+  /* Graphics2D object for drawing primitives and images. */
   public static Graphics2D GFXContext;
 
   /**

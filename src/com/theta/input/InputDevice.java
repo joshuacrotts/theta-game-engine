@@ -2,8 +2,11 @@ package com.theta.input;
 
 public abstract class InputDevice {
 
+  /* */
   private final BitArray keys;
   private final String name;
+  
+  /* */
   private final int id;
   private short alert;
 

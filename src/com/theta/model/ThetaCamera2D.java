@@ -31,24 +31,30 @@ import java.awt.Graphics2D;
 
 import com.theta.platform.ThetaGame;
 
-public class ThetaCamera2D {
+public class ThetaCamera2D extends ThetaGameObject {
 
   /* */
   private final ThetaGame THETA_GAME;
   
   /* */
-  private Object subject;
+  private ThetaGameObject SUBJECT;
 
   /* */
-  public ThetaCamera2D(ThetaGame thetaGame, Object subject) {
+  public ThetaCamera2D(ThetaGame thetaGame, ThetaGameObject subject) {
     this.THETA_GAME = thetaGame;
-    this.subject = subject;
+    this.SUBJECT = subject;
   }
 
   /**
    * 
    */
   public void update() {
+    if (this.SUBJECT != null) {
+      this.setX((this.SUBJECT.getX() + this.SUBJECT.getWidth() / 2) - this.THETA_GAME.getWidth());
+      this.setY((this.SUBJECT.getY() + this.SUBJECT.getHeight() / 2) - this.THETA_GAME.getHeight());
+      this.setWidth(this.THETA_GAME.getWidth());
+      this.setHeight(this.THETA_GAME.getHeight());
+    }
   }
 
   /**

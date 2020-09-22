@@ -7,6 +7,11 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+import com.theta.input.Command;
+import com.theta.input.InputDevice;
+import com.theta.input.Keyboard;
+import com.theta.input.Mouse;
+
 /**
  * This is essentially a wrapper for a Swing JFrame and a Thread
  * starter, so the user doesn't have to mess with it. ThetaGraphics
@@ -17,6 +22,10 @@ public abstract class ThetaSwingApplication {
 
   /* JFrame to add content to. */
   private final JFrame FRAME;
+  
+  /* Mouse and Keyboard objects by the command framework. */
+  private final Mouse MOUSE;
+  private final Keyboard KEYBOARD;
 
   /* Timer for updating the JFrame. */
   private Timer timer;
@@ -26,6 +35,10 @@ public abstract class ThetaSwingApplication {
 
   /* Milliseconds to specify the speed of our timer. */
   private int ms;
+  
+  /* Time spent from the last frame to the current frame. */
+  private long lastTime;
+  private long dt;
 
   /* Number of milliseconds per second. */
   private static final int SECONDS_TO_MS = 1000;
@@ -34,16 +47,28 @@ public abstract class ThetaSwingApplication {
   private boolean isRunning = false;
 
   public ThetaSwingApplication(int width, int height, int fps, String title) {
+    System.setProperty("sun.java2d.opengl", "true");
+    
+    /* Create the JFrame. */
     this.FRAME = new JFrame(title);
     this.FRAME.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.FRAME.setSize(width, height);
     this.FRAME.setResizable(false);
+    this.FRAME.setLocationRelativeTo(null);
 
-    this.fps = fps;
+    /* Create the Mouse & Keyboard listeners and assign them
+     * to the parent JFrame. */
+    this.MOUSE = new Mouse();
+    this.KEYBOARD = new Keyboard();
+    this.FRAME.addMouseListener(this.MOUSE);
+    this.FRAME.addMouseMotionListener(this.MOUSE);
+    this.FRAME.addKeyListener(this.KEYBOARD);
     
-    this.setFPS(this.fps);
+    /* Sets the current FPS and the millisecond update time for the 
+     * Swing timer. */
+    this.setFPS(fps);
 
-    // Starts the timer.
+    /* Starts the timer. */
     SwingUtilities.invokeLater(() -> {
       this.start();
     });
@@ -132,13 +157,23 @@ public abstract class ThetaSwingApplication {
       if (!this.isRunning) {
         this.stop();
       }
+      
+      /* Compute the delta time. */
+      long time = System.nanoTime();
+      this.dt = ((time - this.lastTime) / 1_000_000);
+      this.lastTime = time;
 
+      /* Call the sub-class run method. */
       this.run();
+      
+      /* Now call the Command framework's update method. */
+      Command.update(this.dt);
 
       // Since the paintComponent method for the JFrame
       // is never called, we have to explicitly tell it that
       // we want drawing to occur.
       this.FRAME.repaint();
+
     });
 
     this.timer.start();
@@ -173,5 +208,13 @@ public abstract class ThetaSwingApplication {
 
   public JFrame getFrame() {
     return this.FRAME;
+  }
+
+  public InputDevice getKeyboard() {
+    return this.KEYBOARD;
+  }
+  
+  public InputDevice getMouse() {
+    return this.MOUSE;
   }
 }

@@ -32,6 +32,7 @@ import java.awt.event.KeyListener;
 
 public class Keyboard extends InputDevice implements KeyListener {
 
+  /* */
   public static final int MAX_CHARS = 0x10000;
 
   public Keyboard() {

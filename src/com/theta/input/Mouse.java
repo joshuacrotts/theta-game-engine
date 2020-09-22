@@ -8,7 +8,10 @@ import java.awt.event.MouseWheelListener;
 
 public class Mouse extends InputDevice implements MouseListener, MouseMotionListener, MouseWheelListener {
 
+  /* */
   private static final int MAX_CHARS = 0x10;
+  
+  /* */
   private int x = -1;
   private int y = -1;
   private int ax = -1;

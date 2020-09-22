@@ -16,6 +16,7 @@ public abstract class ThetaConsoleApplication {
   private final BufferedReader reader;
 
   public ThetaConsoleApplication() {
+    System.setProperty("sun.java2d.opengl", "true");
     this.reader = new BufferedReader(new InputStreamReader(System.in));
     this.run();
   }

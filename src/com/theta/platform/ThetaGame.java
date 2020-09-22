@@ -47,6 +47,7 @@ public abstract class ThetaGame extends Canvas implements Runnable {
    * @param title
    */
   public ThetaGame(int width, int height, String title) {
+    System.setProperty("sun.java2d.opengl", "true");
     this.thread = null;
     this.isRunning = false;
     this.currentFPS = 0;

@@ -11,13 +11,10 @@ public class ThetaGameTest extends ThetaGraphicalApplication {
 
   @Override
   public void update() {
-    
   }
 
   @Override
   public void render() {
-    // TODO Auto-generated method stub
-    
   }
   
   public static void main(String[] args) {
