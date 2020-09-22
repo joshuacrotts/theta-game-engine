@@ -33,20 +33,20 @@ import com.theta.model.ThetaGameObject;
 public class ThetaAnimationView implements Renderable {
 
   /* */
-  private final BufferedImage[] animationFrames;
-
+  private final ThetaAnimation PARENT_ANIMATION;
+  
   /* */
-  private final ThetaAnimation obj;
+  private final BufferedImage[] FRAMES;
 
   public ThetaAnimationView(BufferedImage[] frames, ThetaAnimation obj) {
-    this.animationFrames = frames;
-    this.obj = obj;
+    this.FRAMES = frames;
+    this.PARENT_ANIMATION = obj;
   }
 
   @Override
   public void render(Graphics2D g2) {
-    BufferedImage currentFrame = this.animationFrames[this.obj.getCurrentFrameIndex()];
-    ThetaGameObject tgo = this.obj.getThetaGameObject();
+    BufferedImage currentFrame = this.FRAMES[this.PARENT_ANIMATION.getCurrentFrameIndex()];
+    ThetaGameObject tgo = this.PARENT_ANIMATION.getThetaGameObject();
     
     g2.drawImage(currentFrame, (int) tgo.getX(), (int) tgo.getY(), 
         currentFrame.getWidth(),
@@ -62,8 +62,8 @@ public class ThetaAnimationView implements Renderable {
    */
   public void render(Graphics2D g2, double theta) {
     this.render(g2, 
-        this.obj.getThetaGameObject().getX(), 
-        this.obj.getThetaGameObject().getY(), theta);
+        this.PARENT_ANIMATION.getThetaGameObject().getX(), 
+        this.PARENT_ANIMATION.getThetaGameObject().getY(), theta);
   }
 
   /**
@@ -77,8 +77,8 @@ public class ThetaAnimationView implements Renderable {
    */
   public void render(Graphics2D g2, double x, double y, double theta) {
     this.render(g2, x, y, 
-        this.obj.getThetaGameObject().getWidth(), 
-        this.obj.getThetaGameObject().getHeight(), theta);
+        this.PARENT_ANIMATION.getThetaGameObject().getWidth(), 
+        this.PARENT_ANIMATION.getThetaGameObject().getHeight(), theta);
   }
 
   /**
@@ -94,8 +94,8 @@ public class ThetaAnimationView implements Renderable {
     AffineTransform backup = g2.getTransform();
     AffineTransform transform = new AffineTransform();
     
-    BufferedImage currentFrame = this.animationFrames[this.obj.getCurrentFrameIndex()];
-    ThetaGameObject tgo = this.obj.getThetaGameObject();
+    BufferedImage currentFrame = this.FRAMES[this.PARENT_ANIMATION.getCurrentFrameIndex()];
+    ThetaGameObject tgo = this.PARENT_ANIMATION.getThetaGameObject();
     
     transform.rotate(theta, (x + currentFrame.getWidth() / 2.0f), (y + currentFrame.getHeight() / 2.0f));
 
@@ -105,6 +105,6 @@ public class ThetaAnimationView implements Renderable {
   }
 
   public BufferedImage[] getFrames() {
-    return this.animationFrames;
+    return this.FRAMES;
   }
 }

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Shape;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import com.theta.handler.ThetaHandler;
@@ -22,7 +23,7 @@ public abstract class ThetaGraphics {
    * @param y
    */
   public static void image(BufferedImage image, int x, int y) {
-    ThetaGraphics.GFXContext.drawImage(image, x, y, null);
+    GFXContext.drawImage(image, x, y, null);
   }
 
   /**
@@ -35,21 +36,23 @@ public abstract class ThetaGraphics {
    * @param color
    * @param fill
    */
-  public static void shape(Shape shape, int x, int y, Color color, boolean fill) {
+  public static void shape(Shape shape, int x, int y, Color color, boolean fill, int theta) {
     if (color == null) {
       color = Color.black;
     }
 
-    Color old = ThetaGraphics.GFXContext.getColor();
-    ThetaGraphics.GFXContext.setColor(color);
+    Color old = GFXContext.getColor();
+    GFXContext.setColor(color);
+    GFXContext.rotate(theta, x + shape.getBounds().width / 2, y + shape.getBounds().height / 2);
 
     if (fill) {
-      ThetaGraphics.GFXContext.draw(shape);
+      GFXContext.draw(shape);
     } else {
-      ThetaGraphics.GFXContext.fill(shape);
+      GFXContext.fill(shape);
     }
 
-    ThetaGraphics.GFXContext.setColor(old);
+    GFXContext.setColor(old);
+    GFXContext.rotate(-theta, x + shape.getBounds().width / 2, y + shape.getBounds().height / 2);
   }
 
   /**
@@ -63,20 +66,25 @@ public abstract class ThetaGraphics {
    * @param size
    * @param color
    */
-  public static void text(String text, int x, int y, String font, float size, Color color) {
-    Font oldFont = ThetaGraphics.GFXContext.getFont();
-    Color oldColor = ThetaGraphics.GFXContext.getColor();
+  public static void text(String text, int x, int y, String font, float size, Color color, double theta) {
+    Font oldFont = GFXContext.getFont();
+    Color oldColor = GFXContext.getColor();
 
     if (font != null && !font.isEmpty()) {
-      ThetaGraphics.GFXContext.setFont(ThetaUtils.initFont(font, size));
+      GFXContext.setFont(ThetaUtils.initFont(font, size));
     } else {
-      ThetaGraphics.GFXContext.setFont(new Font("Arial", 0, (int) size));
+      GFXContext.setFont(new Font("Arial", 0, (int) size));
     }
-    ThetaGraphics.GFXContext.setColor(color);
-    ThetaGraphics.GFXContext.drawString(text, x, y);
 
-    ThetaGraphics.GFXContext.setColor(oldColor);
-    ThetaGraphics.GFXContext.setFont(oldFont);
+    Rectangle2D stringBounds = GFXContext.getFontMetrics().getStringBounds(text, GFXContext);
+    GFXContext.rotate(theta, x + stringBounds.getWidth() / 2, y + stringBounds.getHeight() / 2);
+
+    GFXContext.setColor(color);
+    GFXContext.drawString(text, x, y);
+
+    GFXContext.setColor(oldColor);
+    GFXContext.setFont(oldFont);
+    GFXContext.rotate(-theta, x + stringBounds.getWidth() / 2, y + stringBounds.getHeight() / 2);
   }
 
   /**
@@ -90,21 +98,25 @@ public abstract class ThetaGraphics {
    * @param size
    * @param color
    */
-  public static void text(String text, int x, int y, Font font, float size, Color color) {
-    Font oldFont = ThetaGraphics.GFXContext.getFont();
-    Color oldColor = ThetaGraphics.GFXContext.getColor();
+  public static void text(String text, int x, int y, Font font, float size, Color color, double theta) {
+    Font oldFont = GFXContext.getFont();
+    Color oldColor = GFXContext.getColor();
 
     if (font != null) {
-      ThetaGraphics.GFXContext.setFont(font.deriveFont(size));
+      GFXContext.setFont(font.deriveFont(size));
     } else {
-      ThetaGraphics.GFXContext.setFont(new Font("Arial", 0, (int) size));
+      GFXContext.setFont(new Font("Arial", 0, (int) size));
     }
 
-    ThetaGraphics.GFXContext.setColor(color);
-    ThetaGraphics.GFXContext.drawString(text, x, y);
+    Rectangle2D stringBounds = GFXContext.getFontMetrics().getStringBounds(text, GFXContext);
+    GFXContext.rotate(theta, x + stringBounds.getWidth() / 2, y + stringBounds.getHeight() / 2);
 
-    ThetaGraphics.GFXContext.setColor(oldColor);
-    ThetaGraphics.GFXContext.setFont(oldFont);
+    GFXContext.setColor(color);
+    GFXContext.drawString(text, x, y);
+
+    GFXContext.setColor(oldColor);
+    GFXContext.setFont(oldFont);
+    GFXContext.rotate(-theta, x + stringBounds.getWidth() / 2, y + stringBounds.getHeight() / 2);
   }
 
   /**
@@ -119,21 +131,23 @@ public abstract class ThetaGraphics {
    * @param fill   - if true, will fill the rectangle with color. Otherwise, will
    *               draw the outline only
    */
-  public static void rect(int x, int y, int width, int height, Color color, boolean fill) {
+  public static void rect(int x, int y, int width, int height, Color color, boolean fill, double theta) {
     if (color == null) {
       color = Color.black;
     }
 
-    Color old = ThetaGraphics.GFXContext.getColor();
-    ThetaGraphics.GFXContext.setColor(color);
+    Color old = GFXContext.getColor();
+    GFXContext.setColor(color);
+    GFXContext.rotate(theta, x + width / 2, y + height / 2);
 
     if (fill) {
-      ThetaGraphics.GFXContext.fillRect(x, y, width, height);
+      GFXContext.fillRect(x, y, width, height);
     } else {
-      ThetaGraphics.GFXContext.drawRect(x, y, width, height);
+      GFXContext.drawRect(x, y, width, height);
     }
 
-    ThetaGraphics.GFXContext.setColor(old);
+    GFXContext.setColor(old);
+    GFXContext.rotate(-theta, x + width / 2, y + height / 2);
   }
 
   /**
@@ -152,16 +166,16 @@ public abstract class ThetaGraphics {
       color = Color.black;
     }
 
-    Color old = ThetaGraphics.GFXContext.getColor();
-    ThetaGraphics.GFXContext.setColor(color);
+    Color old = GFXContext.getColor();
+    GFXContext.setColor(color);
 
     if (fill) {
-      ThetaGraphics.GFXContext.fillOval(x, y, width, height);
+      GFXContext.fillOval(x, y, width, height);
     } else {
-      ThetaGraphics.GFXContext.drawOval(x, y, width, height);
+      GFXContext.drawOval(x, y, width, height);
     }
 
-    ThetaGraphics.GFXContext.setColor(old);
+    GFXContext.setColor(old);
   }
 
   /**
@@ -180,17 +194,17 @@ public abstract class ThetaGraphics {
       color = Color.black;
     }
 
-    Color old = ThetaGraphics.GFXContext.getColor();
-    ThetaGraphics.GFXContext.setColor(color);
+    Color old = GFXContext.getColor();
+    GFXContext.setColor(color);
     int nPoints = xPoints.length;
 
     if (fill) {
-      ThetaGraphics.GFXContext.fillPolygon(xPoints, yPoints, nPoints);
+      GFXContext.fillPolygon(xPoints, yPoints, nPoints);
     } else {
-      ThetaGraphics.GFXContext.drawPolygon(xPoints, yPoints, nPoints);
+      GFXContext.drawPolygon(xPoints, yPoints, nPoints);
     }
 
-    ThetaGraphics.GFXContext.setColor(old);
+    GFXContext.setColor(old);
   }
 
   /**
@@ -199,7 +213,7 @@ public abstract class ThetaGraphics {
    * @param obj
    */
   public static void Object(ThetaHandler obj) {
-    obj.render(ThetaGraphics.GFXContext);
+    obj.render(GFXContext);
   }
 
   /**
@@ -208,7 +222,7 @@ public abstract class ThetaGraphics {
    * @param handler
    */
   public static void Handler(ThetaHandler handler) {
-    handler.render(ThetaGraphics.GFXContext);
+    handler.render(GFXContext);
   }
 
   /**
