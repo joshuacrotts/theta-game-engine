@@ -12,7 +12,7 @@ import com.theta.view.Updatable;
 public class ThetaHandler<T extends ScreenObject> implements Renderable, Updatable {
 
   /* List of entities for the handler. */
-  private ArrayList<T> entities;
+  protected ArrayList<T> entities;
 
   /* ThetaCamera for the ThetaHandler. */
   private ThetaCamera2D thetaCamera;
@@ -24,6 +24,13 @@ public class ThetaHandler<T extends ScreenObject> implements Renderable, Updatab
   public ThetaHandler(ThetaCamera2D thetaCamera) {
     this.entities = new ArrayList<T>();
     this.thetaCamera = thetaCamera;
+  }
+  
+  /**
+   * 
+   */
+  public ThetaHandler(int size) {
+    this.entities = new ArrayList<T>(size);
   }
 
   /**
