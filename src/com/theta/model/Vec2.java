@@ -17,7 +17,6 @@ public class Vec2 implements Comparable {
   
   /**
    * 
-   * @param <T>
    * @param u
    * @return
    */

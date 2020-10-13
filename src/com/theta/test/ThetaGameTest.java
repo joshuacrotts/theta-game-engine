@@ -19,7 +19,7 @@ public class ThetaGameTest extends ThetaGraphicalApplication {
 
   @Override
   public void update() {
-    angle+=0.02;
+    angle += 0.02;
   }
 
   @Override

@@ -8,10 +8,10 @@ import com.theta.view.ScreenObject;
 
 public abstract class ThetaGameObject implements ScreenObject {
 
-  /* */
+  /* Animation of the current ThetaGameObject. */
   private ThetaAnimationController activeAnimation;
 
-  /* */
+  /* Bounds of the object; this uses AABB collision. */
   private Rectangle bounds;
 
   /* X and Y coordinate positions. */
