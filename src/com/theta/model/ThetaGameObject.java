@@ -26,6 +26,9 @@ public abstract class ThetaGameObject implements ScreenObject {
   // sprite the user chooses.
   //
   private Vec2 dim;
+  
+  /* Angle of the object in degrees. */
+  private double angle = 0;
 
   /*
    * States for the object; they can either be alive or dead, and they can have a
@@ -39,6 +42,8 @@ public abstract class ThetaGameObject implements ScreenObject {
 
   public ThetaGameObject(double x, double y) {
     this.pos = new Vec2(x, y);
+    this.dim = new Vec2(0, 0);
+    this.velocity = new Vec2(0, 0);
   }
 
   public ThetaGameObject(double x, double y, ThetaAnimationController animation) {
@@ -71,8 +76,7 @@ public abstract class ThetaGameObject implements ScreenObject {
    * Short-hand way of typing x += velX; y += velY.
    */
   public void updatePosition() {
-    this.setX(this.getX() + this.getVelX());
-    this.setY(this.getY() + this.getVelY());
+    this.pos = this.pos.addVec2(this.pos, this.velocity);
   }
   
   public ThetaAnimationController getActiveAnimation() {
@@ -104,7 +108,7 @@ public abstract class ThetaGameObject implements ScreenObject {
   }
 
   public void setVelX(double velX) {
-    this.pos.setX(velX);
+    this.velocity.setX(velX);
   }
 
   public double getVelY() {
@@ -112,14 +116,14 @@ public abstract class ThetaGameObject implements ScreenObject {
   }
 
   public void setVelY(double velY) {
-    this.pos.setY(velY);
+    this.velocity.setY(velY);
   }
 
   public double getWidth() {
     return this.dim.getX();
   }
 
-  public void setWidth(int width) {
+  public void setWidth(double width) {
     this.dim.setX(width);
   }
 
@@ -127,8 +131,16 @@ public abstract class ThetaGameObject implements ScreenObject {
     return this.dim.getY();
   }
 
-  public void setHeight(int height) {
+  public void setHeight(double height) {
     this.dim.setY(height);
+  }
+  
+  public double getAngle() {
+    return this.angle;
+  }
+  
+  public void setAngle(double angle) {
+    this.angle = angle;
   }
 
   public int getFlags() {

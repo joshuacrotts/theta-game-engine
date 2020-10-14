@@ -1,5 +1,8 @@
 package com.theta.handler;
 
+import java.awt.Graphics2D;
+import java.util.Collections;
+
 import com.theta.model.ThetaParticle;
 import com.theta.model.ThetaParticleSystemStatus;
 import com.theta.util.Constants;
@@ -27,8 +30,7 @@ public class ThetaParticleHandler extends ThetaHandler<ThetaParticle> {
     if (this.aliveCount >= this.MAX_PARTICLES) {
       return ThetaParticleSystemStatus.THETA_PS_FULL;
     }
-    
-    this.entities.add(p);
+    this.entities.add(this.aliveCount, p);
     this.aliveCount++;
     return ThetaParticleSystemStatus.THETA_PS_SUCCESS;
   }
@@ -37,15 +39,20 @@ public class ThetaParticleHandler extends ThetaHandler<ThetaParticle> {
   public void update() {
     for (int i = 0; i < this.aliveCount; i++) {
       ThetaParticle particle = this.entities.get(i);
-      
-      if ((particle.getFlags() & Constants.DEATH_MASK) > 0) {
-        int deadIndex = --(this.aliveCount);
+      particle.update();
+
+      if ((particle.getFlags() & Constants.DEATH_MASK) != 0) {
+        int deadIndex = (--this.aliveCount);
         ThetaParticle backParticle = this.entities.get(deadIndex);
-        
-        ThetaParticle tmp = backParticle;
-        backParticle = particle;
-        particle = tmp;
+        this.entities.set(deadIndex, particle);
+        this.entities.set(i, backParticle);
+        this.entities.remove(deadIndex);
       }
     }
+  }
+  
+  @Override
+  public void render(Graphics2D g2) {
+    super.render(g2);
   }
 }

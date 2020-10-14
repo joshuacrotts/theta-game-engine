@@ -6,17 +6,17 @@ import com.theta.util.ThetaUtils;
 
 public class ThetaFadeController {
 
-  /* */
+  /* Colors that this FadeController swaps between. */
   private final Color COLOR_ONE;
   private final Color COLOR_TWO;
 
-  /* */
+  /* The alpha speed swap between the two colors. */
   private final double ALPHA;
 
-  /* */
+  /* Current time of the swap. */
   private double currentTime;
   
-  /* */
+  /* Boolean that controls which color we're on. */
   private boolean firstColor;
 
   public ThetaFadeController(Color c1, Color c2, double alpha) {

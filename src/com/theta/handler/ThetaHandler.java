@@ -57,7 +57,6 @@ public class ThetaHandler<T extends ScreenObject> implements Renderable, Updatab
    */
   public void render(Graphics2D g2) {
     Iterator<T> it = this.entities.iterator();
-
     while (it.hasNext()) {
       T next = it.next();
       next.render(g2);

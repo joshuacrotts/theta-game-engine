@@ -8,8 +8,11 @@ import com.theta.platform.ThetaGraphicalApplication;
 
 public class ThetaGameTest extends ThetaGraphicalApplication {
   
-  private double angle = 0;
+  /* */
   private ThetaFadeController sfc;
+  
+  /* */
+  private double angle = 0;
   
   public ThetaGameTest(int width, int height, String title) {
     super(width, height, title);
