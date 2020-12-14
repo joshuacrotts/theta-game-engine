@@ -17,13 +17,17 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  */
 public final class ThetaAudio {
 
-  /* */
+  /* Constant declared for if a clip should be played forever. */
   public static final int INFINITELY = Clip.LOOP_CONTINUOUSLY;
   
   /** Javax clip object holding audio information. */
   private Clip audioClip;
 
+<<<<<<< HEAD
   /** Path and name of audiofile. */
+=======
+  /* Path and name of audiofile. */
+>>>>>>> 962663658c54602c54373c6937cfac4f718df749
   private String fileName;
 
   public ThetaAudio(String fileLocation) {

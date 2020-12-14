@@ -14,7 +14,8 @@ import com.theta.input.Mouse;
 import com.theta.view.ThetaWindowView;
 
 /**
- * 
+ * Creates a new ThetaGame instance. ThetaGame starts the game thread
+ * with Swing, instantiates the window, and the rendering process/game loop.
  */
 public abstract class ThetaGame extends Canvas implements Runnable {
 
@@ -70,6 +71,7 @@ public abstract class ThetaGame extends Canvas implements Runnable {
   }
 
   /**
+   * Creates a ThetaGame with a window that has a 16:9 aspect ratio, given the width.
    * 
    * @param width
    * @param title
@@ -79,6 +81,7 @@ public abstract class ThetaGame extends Canvas implements Runnable {
   }
 
   /**
+   * Creates a ThetaGame with a window that is the default size of the screen.
    * 
    * @param title
    */
@@ -87,7 +90,7 @@ public abstract class ThetaGame extends Canvas implements Runnable {
   }
 
   /**
-   * 
+   * Starts the game and the thread.
    */
   public void startGame() {
     if (this.isRunning) {

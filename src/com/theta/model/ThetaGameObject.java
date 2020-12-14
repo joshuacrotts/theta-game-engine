@@ -8,27 +8,27 @@ import com.theta.view.ScreenObject;
 
 public abstract class ThetaGameObject implements ScreenObject {
 
-  /* */
+  /* Animation of the current ThetaGameObject. */
   private ThetaAnimationController activeAnimation;
 
-  /* */
+  /* Bounds of the object; this uses AABB collision. */
   private Rectangle bounds;
 
   /* X and Y coordinate positions. */
-  private double x = 0;
-  private double y = 0;
+  private Vec2 pos;
 
   /* X and Y velocities. */
-  private double velX;
-  private double velY;
+  private Vec2 velocity;
 
   //
   // Object dimensions - these can either be preset by the user,
   // or the library can automatically set these to the size of the
   // sprite the user chooses.
   //
-  private int width;
-  private int height;
+  private Vec2 dim;
+  
+  /* Angle of the object in degrees. */
+  private double angle = 0;
 
   /*
    * States for the object; they can either be alive or dead, and they can have a
@@ -41,8 +41,9 @@ public abstract class ThetaGameObject implements ScreenObject {
   }
 
   public ThetaGameObject(double x, double y) {
-    this.x = x;
-    this.y = y;
+    this.pos = new Vec2(x, y);
+    this.dim = new Vec2(0, 0);
+    this.velocity = new Vec2(0, 0);
   }
 
   public ThetaGameObject(double x, double y, ThetaAnimationController animation) {
@@ -75,8 +76,7 @@ public abstract class ThetaGameObject implements ScreenObject {
    * Short-hand way of typing x += velX; y += velY.
    */
   public void updatePosition() {
-    this.setX(this.getX() + this.getVelX());
-    this.setY(this.getY() + this.getVelY());
+    this.pos = this.pos.addVec2(this.pos, this.velocity);
   }
   
   public ThetaAnimationController getActiveAnimation() {
@@ -88,51 +88,59 @@ public abstract class ThetaGameObject implements ScreenObject {
   }
 
   public double getX() {
-    return x;
+    return this.pos.getX();
   }
 
   public void setX(double x) {
-    this.x = x;
+    this.pos.setX(x);
   }
 
   public double getY() {
-    return y;
+    return this.pos.getY();
   }
 
   public void setY(double y) {
-    this.y = y;
+    this.pos.setY(y);
   }
 
   public double getVelX() {
-    return velX;
+    return this.velocity.getX();
   }
 
   public void setVelX(double velX) {
-    this.velX = velX;
+    this.velocity.setX(velX);
   }
 
   public double getVelY() {
-    return velY;
+    return this.velocity.getY();
   }
 
   public void setVelY(double velY) {
-    this.velY = velY;
+    this.velocity.setY(velY);
   }
 
-  public int getWidth() {
-    return width;
+  public double getWidth() {
+    return this.dim.getX();
   }
 
-  public void setWidth(int width) {
-    this.width = width;
+  public void setWidth(double width) {
+    this.dim.setX(width);
   }
 
-  public int getHeight() {
-    return height;
+  public double getHeight() {
+    return this.dim.getY();
   }
 
-  public void setHeight(int height) {
-    this.height = height;
+  public void setHeight(double height) {
+    this.dim.setY(height);
+  }
+  
+  public double getAngle() {
+    return this.angle;
+  }
+  
+  public void setAngle(double angle) {
+    this.angle = angle;
   }
 
   public int getFlags() {
@@ -163,29 +171,24 @@ public abstract class ThetaGameObject implements ScreenObject {
     this.activeAnimation = animation;
   }
 
-  public Rectangle getBounds(int nX, int nY, int nW, int nH) {
-    this.bounds = new Rectangle((int) this.x + nX, (int) this.y + nY, this.width + nW, this.height + nH);
-    return this.bounds;
-  }
-
   public Rectangle getBounds() {
-    this.bounds = new Rectangle((int) this.x, (int) this.y, this.width, this.height);
+    this.bounds = new Rectangle((int) this.getX(), (int) this.getY(), (int) this.getWidth(), (int) this.getHeight());
     return this.bounds;
   }
-
-  public Rectangle getLeftBounds() {
-    return new Rectangle((int) this.x, (int) this.y, 1, this.height);
-  }
-
-  public Rectangle getRightBounds() {
-    return new Rectangle((int) this.x + this.width, (int) this.y, 1, this.height);
-  }
-
-  public Rectangle getTopBounds() {
-    return new Rectangle((int) this.x, (int) this.y, this.width, 3);
-  }
-
-  public Rectangle getBottomBounds() {
-    return new Rectangle((int) this.x, (int) this.y + this.height, this.width, 1);
-  }
+//
+//  public Rectangle getLeftBounds() {
+//    return new Rectangle((int) this.x, (int) this.y, 1, this.height);
+//  }
+//
+//  public Rectangle getRightBounds() {
+//    return new Rectangle((int) this.x + this.width, (int) this.y, 1, this.height);
+//  }
+//
+//  public Rectangle getTopBounds() {
+//    return new Rectangle((int) this.x, (int) this.y, this.width, 3);
+//  }
+//
+//  public Rectangle getBottomBounds() {
+//    return new Rectangle((int) this.x, (int) this.y + this.height, this.width, 1);
+//  }
 }

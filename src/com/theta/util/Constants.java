@@ -9,6 +9,8 @@ import java.io.File;
  */
 public class Constants {
 
+  public static final int DEATH_MASK = 0x10000000;
+  
   public static final int MOUSE_MASK = -2147483648;
   public static final int KEYBOARD_MASK = 0;
   public static final int COMMAND_MASK = 254;
