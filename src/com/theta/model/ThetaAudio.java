@@ -20,10 +20,10 @@ public final class ThetaAudio {
   /* */
   public static final int INFINITELY = Clip.LOOP_CONTINUOUSLY;
   
-  /* Javax clip object holding audio information. */
+  /** Javax clip object holding audio information. */
   private Clip audioClip;
 
-  // Path and name of audiofile.
+  /** Path and name of audiofile. */
   private String fileName;
 
   public ThetaAudio(String fileLocation) {

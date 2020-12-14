@@ -119,13 +119,30 @@ public abstract class ThetaUtils {
   }
 
   /**
-   * Clamps num between min and max.
+   * Clamps integer num between min and max.
    *
    * @param num
    * @param min
    * @param max
    */
   public static int clamp(int num, int min, int max) {
+    if (num < min) {
+      return min;
+    } else if (num > max) {
+      return max;
+    }
+
+    return num;
+  }
+  
+  /**
+   * Clamps double num between min and max.
+   *
+   * @param num
+   * @param min
+   * @param max
+   */
+  public static double clamp(double num, double min, double max) {
     if (num < min) {
       return min;
     } else if (num > max) {
@@ -146,7 +163,7 @@ public abstract class ThetaUtils {
    */
   public static double normalize(double n, double oldMin, double oldMax, double newMin, double newMax) {
     if (n < oldMin || n > oldMax) {
-      throw new IllegalArgumentException("Number cannot be outside the range [" + oldMin + ", " + oldMax + "].");
+      throw new IllegalArgumentException("Number " + n + " cannot be outside the range [" + oldMin + ", " + oldMax + "].");
     }
 
     return (((n - oldMin) * (newMax - newMin)) / (oldMax - oldMin)) + newMin;
