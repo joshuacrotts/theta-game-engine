@@ -187,7 +187,7 @@ public abstract class ThetaGraphics {
    */
   public static void polygon(int[] xPoints, int[] yPoints, Color color, boolean fill) {
     if (xPoints.length != yPoints.length) {
-      throw new IllegalArgumentException("Error, your polygon arrays must have the same length.");
+      throw new IllegalArgumentException("Error, polygon arrays must have the same length.");
     }
 
     if (color == null) {

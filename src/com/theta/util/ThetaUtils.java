@@ -119,13 +119,30 @@ public abstract class ThetaUtils {
   }
 
   /**
-   * Clamps num between min and max.
+   * Clamps integer num between min and max.
    *
    * @param num
    * @param min
    * @param max
    */
   public static int clamp(int num, int min, int max) {
+    if (num < min) {
+      return min;
+    } else if (num > max) {
+      return max;
+    }
+
+    return num;
+  }
+  
+  /**
+   * Clamps double num between min and max.
+   *
+   * @param num
+   * @param min
+   * @param max
+   */
+  public static double clamp(double num, double min, double max) {
     if (num < min) {
       return min;
     } else if (num > max) {
