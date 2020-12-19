@@ -76,7 +76,7 @@ public abstract class ThetaGameObject implements ScreenObject {
    * Short-hand way of typing x += velX; y += velY.
    */
   public void updatePosition() {
-    this.pos = this.pos.add(this.velocity);
+    this.pos.add(this.velocity);
   }
   
   public ThetaAnimationController getActiveAnimation() {
