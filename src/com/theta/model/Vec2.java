@@ -20,7 +20,7 @@ public class Vec2 implements Comparable {
    * @param u
    * @return
    */
-  public Vec2 cloneVec2(Vec2 u) {
+  public Vec2 clone(Vec2 u) {
     return new Vec2(u.x, u.y);
   }
   
@@ -30,8 +30,8 @@ public class Vec2 implements Comparable {
    * @param v
    * @return
    */
-  public Vec2 addVec2(Vec2 u, Vec2 v) {
-    Vec2 w = new Vec2(u.x, u.y);
+  public Vec2 add(Vec2 v) {
+    Vec2 w = new Vec2(this.x, this.y);
     w.x += v.x;
     w.y += v.y;
     return w;
@@ -43,8 +43,8 @@ public class Vec2 implements Comparable {
    * @param v
    * @return
    */
-  public Vec2 subVec2(Vec2 u, Vec2 v) {
-    Vec2 w = new Vec2(u.x, u.y);
+  public Vec2 sub(Vec2 v) {
+    Vec2 w = new Vec2(this.x, this.y);
     w.x -= v.x;
     w.y -= v.y;
     return w;

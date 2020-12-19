@@ -29,6 +29,7 @@ public class ThetaGameTest extends ThetaGraphicalApplication {
   public void render() {
     ThetaGraphics.text("Text", 50, 50, "", 32f, Color.white, angle);
     ThetaGraphics.rect(100, 100, 50, 50, this.sfc.combine(), true, angle);
+    ThetaGraphics.ellipse(200, 200, 50, 50, Color.RED, true);
   }
   
   public static void main(String[] args) {

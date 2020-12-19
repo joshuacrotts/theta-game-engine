@@ -177,6 +177,35 @@ public abstract class ThetaGraphics {
 
     GFXContext.setColor(old);
   }
+  
+
+  /**
+   * Draws an ellipse at center x, center y, dim width, height, Color color to the screen.
+   *
+   * @param center x
+   * @param center y
+   * @param width
+   * @param height
+   * @param color  - if null, defaults to black.
+   * @param fill   - if true, will fill the ellipse with color. Otherwise, will
+   *               draw the outline only
+   */
+  public static void ellipse(double cx, double cy, double width, double height, Color color, boolean fill) {
+    if (color == null) {
+      color = Color.black;
+    }
+
+    Color old = GFXContext.getColor();
+    GFXContext.setColor(color);
+
+    if (fill) {
+      GFXContext.fillOval((int) (cx - width), (int) (cy - height), (int) (width * 2), (int) (height * 2));
+    } else {
+      GFXContext.drawOval((int) (cx - width), (int) (cy - height), (int) (width * 2), (int) (height * 2));
+    }
+
+    GFXContext.setColor(old);
+  }
 
   /**
    * 

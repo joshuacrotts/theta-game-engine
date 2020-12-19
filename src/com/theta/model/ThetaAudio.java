@@ -23,11 +23,7 @@ public final class ThetaAudio {
   /** Javax clip object holding audio information. */
   private Clip audioClip;
 
-<<<<<<< HEAD
   /** Path and name of audiofile. */
-=======
-  /* Path and name of audiofile. */
->>>>>>> 962663658c54602c54373c6937cfac4f718df749
   private String fileName;
 
   public ThetaAudio(String fileLocation) {
