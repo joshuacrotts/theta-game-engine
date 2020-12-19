@@ -20,15 +20,24 @@ import com.theta.input.Mouse;
  */
 public abstract class ThetaSwingApplication {
 
+  /* Number of milliseconds per second. */
+  private static final int SECONDS_TO_MS = 1000;
+  
+  /** Number of milliseconds dedicated to the command update timer. */
+  private static final int CMD_TIMER_MS = 17;
+  
   /* JFrame to add content to. */
   private final JFrame FRAME;
   
   /* Mouse and Keyboard objects by the command framework. */
   private final Mouse MOUSE;
   private final Keyboard KEYBOARD;
-
+  
   /* Timer for updating the JFrame. */
   private Timer timer;
+  
+  /* Key timer. */
+  private Timer commandTimer;
 
   /* Frames per second to run the timer at. */
   private int fps;
@@ -39,9 +48,6 @@ public abstract class ThetaSwingApplication {
   /* Time spent from the last frame to the current frame. */
   private long lastTime;
   private long dt;
-
-  /* Number of milliseconds per second. */
-  private static final int SECONDS_TO_MS = 1000;
 
   /* Boolean to set the timer to run or not. */
   private boolean isRunning = false;
@@ -66,7 +72,8 @@ public abstract class ThetaSwingApplication {
     
     /* Sets the current FPS and the millisecond update time for the 
      * Swing timer. */
-    this.setFPS(fps);
+    this.fps = fps;
+    this.ms = SECONDS_TO_MS / fps;
 
     /* Starts the timer. */
     SwingUtilities.invokeLater(() -> {
@@ -153,7 +160,17 @@ public abstract class ThetaSwingApplication {
    * 
    */
   private void update() {
-    this.timer = new Timer(this.ms, timerListener -> {
+    this.setupCommandTimer();
+    this.setupAppTimer();
+    this.commandTimer.start();
+    this.timer.start();
+  }
+  
+  /**
+   * Sets up the command timer - this runs on a different interval than the render/app timer.
+   */
+  private void setupCommandTimer() {
+    this.commandTimer = new Timer(CMD_TIMER_MS, timerListener -> {
       if (!this.isRunning) {
         this.stop();
       }
@@ -162,21 +179,20 @@ public abstract class ThetaSwingApplication {
       long time = System.nanoTime();
       this.dt = ((time - this.lastTime) / 1_000_000);
       this.lastTime = time;
-
-      /* Call the sub-class run method. */
-      this.run();
       
       /* Now call the Command framework's update method. */
       Command.update(this.dt);
-
-      // Since the paintComponent method for the JFrame
-      // is never called, we have to explicitly tell it that
-      // we want drawing to occur.
-      this.FRAME.repaint();
-
     });
-
-    this.timer.start();
+  }
+  
+  /**
+   * Sets up the application and render timer.
+   */
+  private void setupAppTimer() {
+    this.timer = new Timer(this.ms, timerListener -> {
+      this.run();
+      this.FRAME.repaint();
+    });
   }
 
 // =================== GETTERS AND SETTERS ====================== //
@@ -184,6 +200,7 @@ public abstract class ThetaSwingApplication {
   public void setFPS(int fps) {
     this.fps = fps;
     this.ms = SECONDS_TO_MS / fps;
+    this.timer.setDelay(this.ms);
   }
 
   public int getFPS() {

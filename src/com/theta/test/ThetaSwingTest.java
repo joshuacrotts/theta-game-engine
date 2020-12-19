@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 
 import com.theta.input.Command;
 import com.theta.platform.ThetaSwingApplication;
+import com.theta.util.ThetaUtils;
 
 public class ThetaSwingTest extends ThetaSwingApplication {
 
@@ -12,10 +13,8 @@ public class ThetaSwingTest extends ThetaSwingApplication {
   
   public ThetaSwingTest() {
     super(1280, 720, 60, "Swing Test");
-    
     this.CMD_UP = new UpCommand();
     this.CMD_UP.bind(super.getKeyboard(), KeyEvent.VK_W);
-    
     super.setVisible(true);
   }
   

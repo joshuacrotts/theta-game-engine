@@ -145,10 +145,6 @@ public abstract class ThetaUtils {
    * @return
    */
   public static double normalize(double n, double oldMin, double oldMax, double newMin, double newMax) {
-    if (n < oldMin || n > oldMax) {
-      throw new IllegalArgumentException("Number cannot be outside the range [" + oldMin + ", " + oldMax + "].");
-    }
-
     return (((n - oldMin) * (newMax - newMin)) / (oldMax - oldMin)) + newMin;
   }
 
