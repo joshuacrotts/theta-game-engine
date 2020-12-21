@@ -114,23 +114,31 @@ public class Vec2 implements Comparable {
 
   /**
    * 
-   * @param u
-   * @param v
+   * @param theta - angle should be in radians.
    * @return
    */
-  public void rotateVec2(double theta) {
+  public void rotate(double theta) {
     this.x = this.x * Math.cos(theta) - this.y * Math.sin(theta);
     this.y = this.x * Math.sin(theta) + this.y * Math.cos(theta);
   }
-
-  /**
-   * 
-   */
+  
   @Override
-  public boolean equals(Object obj) {
-    Vec2 v = (Vec2) obj;
+  public boolean equals(Object o) {
+    Vec2 v = (Vec2) o;
+    
+    return (this == v) || (this.x == v.x && this.y == v.y);
+  }
 
-    return this.x == v.x && this.y == v.y;
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    long temp;
+    temp = Double.doubleToLongBits(x);
+    result = prime * result + (int) (temp ^ (temp >>> 32));
+    temp = Double.doubleToLongBits(y);
+    result = prime * result + (int) (temp ^ (temp >>> 32));
+    return result;
   }
 
   /**

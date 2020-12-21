@@ -70,7 +70,6 @@ public class Mouse extends InputDevice implements MouseListener, MouseMotionList
 
   @Override
   public void mouseWheelMoved(MouseWheelEvent e) {
-    // TODO Auto-generated method stub
   }
 
   /**

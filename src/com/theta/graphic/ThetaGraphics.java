@@ -16,27 +16,26 @@ public abstract class ThetaGraphics {
   public static Graphics2D GFXContext;
 
   /**
-   * Draws an image to the screen with integer parameters.
+   * Draws an image, centered on the screen.
    *
-   * @param image
-   * @param x
-   * @param y
+   * @param image - BufferedImage object.
+   * @param x     - center x location of image.
+   * @param y     - center y location of image.
    */
-  public static void image(BufferedImage image, int x, int y) {
-    GFXContext.drawImage(image, x, y, null);
+  public static void image(BufferedImage image, double x, double y) {
+    GFXContext.drawImage(image, (int) (x - image.getWidth() / 2), (int) (y - image.getHeight() / 2), null);
   }
 
   /**
-   * Draws a generic awt shape to the screen. These can be Ellipses, Rectangles,
-   * Polygons, etc.
+   * Draws a generic awt shape. These can be Ellipses, Rectangles, Polygons, etc.
    * 
    * @param shape
-   * @param x
+   * @param x 
    * @param y
    * @param color
    * @param fill
    */
-  public static void shape(Shape shape, int x, int y, Color color, boolean fill, int theta) {
+  public static void shape(Shape shape, double x, double y, Color color, boolean fill, int theta) {
     if (color == null) {
       color = Color.black;
     }
@@ -66,7 +65,7 @@ public abstract class ThetaGraphics {
    * @param size
    * @param color
    */
-  public static void text(String text, int x, int y, String font, float size, Color color, double theta) {
+  public static void text(String text, double x, double y, String font, float size, Color color, double theta) {
     Font oldFont = GFXContext.getFont();
     Color oldColor = GFXContext.getColor();
 
@@ -80,7 +79,7 @@ public abstract class ThetaGraphics {
     GFXContext.rotate(theta, x + stringBounds.getWidth() / 2, y + stringBounds.getHeight() / 2);
 
     GFXContext.setColor(color);
-    GFXContext.drawString(text, x, y);
+    GFXContext.drawString(text, (int) x, (int) y);
 
     GFXContext.setColor(oldColor);
     GFXContext.setFont(oldFont);
@@ -98,7 +97,7 @@ public abstract class ThetaGraphics {
    * @param size
    * @param color
    */
-  public static void text(String text, int x, int y, Font font, float size, Color color, double theta) {
+  public static void text(String text, double x, double y, Font font, float size, Color color, double theta) {
     Font oldFont = GFXContext.getFont();
     Color oldColor = GFXContext.getColor();
 
@@ -112,7 +111,7 @@ public abstract class ThetaGraphics {
     GFXContext.rotate(theta, x + stringBounds.getWidth() / 2, y + stringBounds.getHeight() / 2);
 
     GFXContext.setColor(color);
-    GFXContext.drawString(text, x, y);
+    GFXContext.drawString(text, (int) x, (int) y);
 
     GFXContext.setColor(oldColor);
     GFXContext.setFont(oldFont);
@@ -123,64 +122,36 @@ public abstract class ThetaGraphics {
    * Draws a rectangle at position x, y, dim width, height, Color color to the
    * screen.
    *
-   * @param x
-   * @param y
+   * @param x - center x of rectangle .
+   * @param y - center y of rectangle.
    * @param width
    * @param height
    * @param color  - if null, defaults to black.
    * @param fill   - if true, will fill the rectangle with color. Otherwise, will
    *               draw the outline only
    */
-  public static void rect(int x, int y, int width, int height, Color color, boolean fill, double theta) {
+  public static void rect(double x, double y, double width, double height, Color color, boolean fill, double theta) {
     if (color == null) {
       color = Color.black;
     }
 
     Color old = GFXContext.getColor();
     GFXContext.setColor(color);
-    GFXContext.rotate(theta, x + width / 2, y + height / 2);
+    GFXContext.rotate(theta, x, y);
 
     if (fill) {
-      GFXContext.fillRect(x, y, width, height);
+      GFXContext.fillRect((int) (x - width / 2), (int) (y - height / 2), (int) width, (int) height);
     } else {
-      GFXContext.drawRect(x, y, width, height);
+      GFXContext.drawRect((int) (x - width / 2), (int) (y - height / 2), (int) width, (int) height);
     }
 
     GFXContext.setColor(old);
-    GFXContext.rotate(-theta, x + width / 2, y + height / 2);
+    GFXContext.rotate(-theta, x, y);
   }
 
   /**
-   * Draws an ellipse at x, y, dim width, height, Color color to the screen.
-   *
-   * @param x
-   * @param y
-   * @param width
-   * @param height
-   * @param color  - if null, defaults to black.
-   * @param fill   - if true, will fill the ellipse with color. Otherwise, will
-   *               draw the outline only
-   */
-  public static void ellipse(int x, int y, int width, int height, Color color, boolean fill) {
-    if (color == null) {
-      color = Color.black;
-    }
-
-    Color old = GFXContext.getColor();
-    GFXContext.setColor(color);
-
-    if (fill) {
-      GFXContext.fillOval(x, y, width, height);
-    } else {
-      GFXContext.drawOval(x, y, width, height);
-    }
-
-    GFXContext.setColor(old);
-  }
-  
-
-  /**
-   * Draws an ellipse at center x, center y, dim width, height, Color color to the screen.
+   * Draws an ellipse at center x, center y, dim width, height, Color color to the
+   * screen.
    *
    * @param center x
    * @param center y
@@ -241,7 +212,7 @@ public abstract class ThetaGraphics {
    *
    * @param obj
    */
-  public static void Object(ThetaHandler obj) {
+  public static void object(ThetaHandler obj) {
     obj.render(GFXContext);
   }
 
@@ -250,7 +221,7 @@ public abstract class ThetaGraphics {
    *
    * @param handler
    */
-  public static void Handler(ThetaHandler handler) {
+  public static void handler(ThetaHandler handler) {
     handler.render(GFXContext);
   }
 

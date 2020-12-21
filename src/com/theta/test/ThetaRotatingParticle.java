@@ -27,7 +27,7 @@ public class ThetaRotatingParticle extends ThetaParticle {
     this.setWidth(ThetaUtils.randomInt(50, 80));
     this.setHeight(this.getWidth());
     this.life = ThetaUtils.randomInt(100, 300);
-    this.deltaAngle = ThetaUtils.randomDouble(-3.0, 3.0);
+    this.deltaAngle = ThetaUtils.randomDouble(-1.0, 1.0);
     this.deltaSize = -1;
   }
   

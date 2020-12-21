@@ -1,8 +1,6 @@
 package com.theta.view;
 
-import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GraphicsConfiguration;
 
@@ -17,6 +15,7 @@ import com.theta.platform.ThetaGame;
  * once it is instantiated.
  */
 public class ThetaWindowView {
+  
   /* */
   private final JFrame FRAME;
   
